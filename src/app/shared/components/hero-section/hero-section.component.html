@@ -1,0 +1,37 @@
+<div class="min-h-screen bg-gradient-to-b from-sky-400 via-sky-300 to-green-200 relative overflow-hidden">
+  <!-- Three.js 3D Minecraft Clouds -->
+  <div class="absolute inset-0 pointer-events-none">
+    <canvas #cloudCanvas class="w-full h-full"></canvas>
+  </div>
+
+  <!-- Hero Content -->
+  <div class="relative z-10 pt-20 pb-32">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+
+      <!-- Main Logo with Tagline -->
+      <div class="mb-4 flex justify-center items-center px-4 relative max-w-md sm:max-w-lg md:max-w-xl mx-auto">
+        <img
+          src="/images/tropicaliaCraft_logo_transparent.png"
+          alt="TropicaliaCraft Logo"
+          class="w-full h-auto pixelated-logo"
+        />
+        <!-- Random Tagline (Minecraft style - Bottom Right like Minecraft UI) -->
+        <div class="absolute bottom-[20%] right-[2%] sm:right-[5%] minecraft-tagline transform -rotate-12 origin-bottom-right">
+          <span class="text-yellow-300 font-minecraft-sign text-xs sm:text-sm md:text-base lg:text-lg drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+            {{ tagline() }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Subtitle -->
+      <p
+        class="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white font-minecraft mb-8 text-shadow-sm px-4"
+      >
+        Explore o Paraíso Pixelado
+      </p>
+
+      <!-- Play Button - Authentic Minecraft Style -->
+      <button class="minecraft-ui-button" (click)="onPlayClick()">JOGAR AGORA</button>
+    </div>
+  </div>
+</div>

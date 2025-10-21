@@ -1,0 +1,53 @@
+<div class="bg-gray-900 py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      @for (image of images(); track image.title) {
+      <div
+        class="minecraft-image-card group"
+        [ngClass]="{
+          'border-blue-500': image.borderColor === 'blue',
+          'border-green-500': image.borderColor === 'green',
+          'border-red-500': image.borderColor === 'red'
+        }"
+      >
+        <div class="aspect-square overflow-hidden bg-gray-800">
+          <img
+            [src]="image.url"
+            [alt]="image.title"
+            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+          />
+        </div>
+        <div
+          class="absolute bottom-0 left-0 right-0 bg-black/80 py-3 text-center border-t-4"
+          [ngClass]="{
+            'border-blue-500': image.borderColor === 'blue',
+            'border-green-500': image.borderColor === 'green',
+            'border-red-500': image.borderColor === 'red'
+          }"
+        >
+          <span class="text-white font-bold font-minecraft text-lg">
+            {{ image.title }}
+          </span>
+        </div>
+      </div>
+      }
+    </div>
+
+    <!-- Gallery Footer -->
+    <div class="mt-12 text-center">
+      <div
+        class="inline-flex items-center space-x-6 bg-gray-800 border-4 border-gray-700 px-8 py-4 rounded-lg"
+      >
+        <button class="text-gray-400 hover:text-white transition-colors font-minecraft">
+          📷 IMAGENS
+        </button>
+        <button class="text-gray-400 hover:text-white transition-colors font-minecraft">
+          📰 NEWSLETTERS
+        </button>
+        <button class="text-gray-400 hover:text-white transition-colors font-minecraft">
+          🖼️ SOBRE IMAGENS
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

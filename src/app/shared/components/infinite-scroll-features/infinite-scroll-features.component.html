@@ -1,0 +1,29 @@
+<div class="relative mb-12 overflow-hidden">
+  <div
+    #scrollContainer
+    (mousedown)="onMouseDown($event)"
+    (mouseleave)="onMouseLeave()"
+    (mouseup)="onMouseUp()"
+    (mousemove)="onMouseMove($event)"
+    (mouseenter)="onMouseEnter()"
+    (mouseleave)="onMouseLeaveContainer()"
+    class="flex space-x-4 overflow-x-auto scrollbar-hide py-4 px-4"
+    [class.cursor-grab]="!isDragging()"
+    [class.cursor-grabbing]="isDragging()">
+    @for (feature of displayFeatures(); track $index) {
+    <div
+      class="flex-shrink-0 bg-gray-800 border-4 border-gray-600 rounded-lg px-6 py-3 hover:border-yellow-500 transition-colors duration-300">
+      <span class="text-2xl mr-3">{{ feature.emoji }}</span>
+      <span class="font-minecraft-sign text-white text-sm whitespace-nowrap">{{ feature.text }}</span>
+    </div>
+    }
+  </div>
+
+  <!-- Gradient Overlays -->
+  <div
+    class="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-gray-900 to-transparent pointer-events-none">
+  </div>
+  <div
+    class="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-gray-900 to-transparent pointer-events-none">
+  </div>
+</div>

@@ -1,0 +1,1033 @@
+// Minecraft-themed styles
+
+// Prevent horizontal scroll on mobile
+:host {
+  display: block;
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+.pixelated,
+.pixelated-logo {
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+.pixelated-logo {
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4))
+          drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  animation: logo-float 3s ease-in-out infinite;
+}
+
+@keyframes logo-float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+// Minecraft Tagline (like "Does barrel rolls!")
+.minecraft-tagline {
+  transform: rotate(-15deg);
+  transform-origin: center;
+  text-shadow:
+    2px 2px 0px rgba(0, 0, 0, 0.8),
+    3px 3px 4px rgba(0, 0, 0, 0.5);
+  animation: tagline-wobble 3s ease-in-out infinite;
+
+  span {
+    font-family: 'MinecraftSignText', monospace;
+    letter-spacing: 0.5px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    display: inline-block;
+  }
+
+  @media (max-width: 640px) {
+    transform: rotate(-12deg) scale(0.8);
+    top: -10px !important;
+    right: -20px !important;
+  }
+
+  @media (min-width: 641px) and (max-width: 768px) {
+    transform: rotate(-15deg) scale(0.9);
+  }
+}
+
+@keyframes tagline-wobble {
+  0%, 100% {
+    transform: rotate(-15deg) translateY(0px);
+  }
+  50% {
+    transform: rotate(-13deg) translateY(-3px);
+  }
+}
+
+.font-minecraft-sign {
+  font-family: 'MinecraftSignText', monospace;
+  letter-spacing: 0.5px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.minecraft-text {
+  color: white;
+  text-shadow:
+    4px 4px 0 rgba(0, 0, 0, 0.3),
+    8px 8px 0 rgba(0, 0, 0, 0.1);
+  font-family: 'Minecraft', 'Mojangles', 'Press Start 2P', monospace, sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.text-shadow-minecraft {
+  text-shadow:
+    3px 3px 0 rgba(0, 0, 0, 0.5),
+    6px 6px 0 rgba(0, 0, 0, 0.2);
+}
+
+// Authentic Minecraft UI Button (like in the game)
+.minecraft-ui-button {
+  position: relative;
+  padding: 0.75rem 2rem;
+  font-family: 'MinecraftSignText', monospace;
+  font-size: 1.1rem;
+  font-weight: normal;
+  letter-spacing: 1.5px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #FFFFFF;
+  text-shadow: 4px 4px 0px #4C4C4C;
+
+  // Stone texture background
+  background-image: url('/images/stone.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  cursor: pointer;
+  image-rendering: pixelated;
+  user-select: none;
+
+  // Minecraft button borders (light top, dark bottom for 3D effect)
+  border: none;
+  box-shadow:
+    inset 0 2px 0 0 #E3E3E3,      // Top highlight (light grey)
+    inset 2px 0 0 0 #C6C6C6,      // Left highlight
+    inset -2px 0 0 0 #373737,     // Right shadow (dark grey)
+    inset 0 -2px 0 0 #252525,     // Bottom shadow (very dark)
+    0 0 0 2px #000000;             // Outer black border
+
+  transition: all 0.05s ease;
+
+  @media (min-width: 640px) {
+    padding: 1rem 3rem;
+    font-size: 1.25rem;
+  }
+
+  // Hover state - slightly brighter with overlay
+  &:hover {
+    background-image: url('/images/stone.jpg');
+    background-size: cover;
+    background-position: center;
+    filter: brightness(1.15);
+    box-shadow:
+      inset 0 2px 0 0 #F0F0F0,
+      inset 2px 0 0 0 #D3D3D3,
+      inset -2px 0 0 0 #464646,
+      inset 0 -2px 0 0 #343434,
+      0 0 0 2px #000000;
+  }
+
+  // Active/pressed state
+  &:active {
+    background-image: url('/images/stone.jpg');
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.85);
+    box-shadow:
+      inset 0 2px 0 0 #8A8A8A,
+      inset 2px 0 0 0 #7A7A7A,
+      inset -2px 0 0 0 #2A2A2A,
+      inset 0 -2px 0 0 #1A1A1A,
+      0 0 0 2px #000000;
+    transform: translateY(1px);
+  }
+
+  // Disabled state (if needed)
+  &:disabled {
+    background-image: url('/images/stone.jpg');
+    background-size: cover;
+    background-position: center;
+    filter: grayscale(0.5) brightness(0.7);
+    color: #A0A0A0;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+.minecraft-button {
+  border: 4px solid rgba(0, 0, 0, 0.3);
+  border-bottom-width: 6px;
+  border-right-width: 6px;
+  image-rendering: pixelated;
+  font-family: 'Minecraft', 'Mojangles', 'Press Start 2P', monospace;
+  letter-spacing: 0.05em;
+  font-weight: 100;
+
+  &:active {
+    border-bottom-width: 4px;
+    border-right-width: 4px;
+    transform: translateY(2px);
+  }
+}
+
+.minecraft-tab {
+  padding: 0.5rem 0.25rem;
+  background-color: rgb(55 65 81);
+  color: white;
+  transition: all 0.2s;
+  border: 2px solid rgb(17 24 39);
+  font-family: monospace;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  min-width: 0;
+  min-height: fit-content;
+  gap: 0.25rem;
+
+  svg {
+    width: 1rem;
+    height: 1rem;
+    fill: white;
+    flex-shrink: 0;
+
+    @media (min-width: 640px) {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+  }
+
+  span {
+    &.font-minecraft {
+      text-align: center;
+      line-height: 1.2;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      hyphens: none;
+      word-break: keep-all;
+      font-size: 0.65rem;
+
+      @media (min-width: 640px) {
+        font-size: 0.75rem;
+      }
+    }
+  }
+
+  &:hover {
+    background-color: rgb(75 85 99);
+  }
+
+  &.active {
+    background-color: rgb(75 85 99);
+    border-bottom-width: 4px;
+    border-bottom-color: white;
+  }
+
+  @media (min-width: 640px) {
+    padding: 0.625rem 0.5rem;
+    gap: 0.375rem;
+  }
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    padding: 0.75rem 1rem;
+  }
+
+  @media (min-width: 1024px) {
+    padding: 1rem 1.5rem;
+  }
+}
+
+// Mobile navigation tabs
+.minecraft-tab-mobile {
+  padding: 1rem 1.5rem;
+  background-color: rgb(55 65 81);
+  color: white;
+  transition: all 0.2s;
+  border: 2px solid rgb(17 24 39);
+  font-family: monospace;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  text-align: left;
+  min-height: 3.5rem;
+  height: 3.5rem;
+
+  svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    fill: white;
+    flex-shrink: 0;
+  }
+
+  &:hover {
+    background-color: rgb(75 85 99);
+  }
+
+  &.active {
+    background-color: rgb(75 85 99);
+    border-left-width: 4px;
+    border-left-color: white;
+  }
+}
+
+// Minecraft Block Card with Breaking Animation
+.minecraft-block-card {
+  background-color: rgb(31 41 55);
+  border-width: 8px;
+  overflow: visible;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  image-rendering: pixelated;
+  cursor: pointer;
+  position: relative;
+
+  .block-container {
+    overflow: hidden;
+    position: relative;
+  }
+
+  .block-icon {
+    position: relative;
+    z-index: 1;
+  }
+
+  .block-breaking-overlay {
+    position: absolute;
+    inset: 0;
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0;
+    pointer-events: none;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-crisp-edges;
+    image-rendering: crisp-edges;
+    z-index: 2;
+  }
+
+  .block-particles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 3;
+  }
+
+  &:active {
+    .block-breaking-overlay {
+      animation: minecraft-block-break 1.5s steps(1) forwards;
+      opacity: 1;
+    }
+
+    .block-container {
+      animation: block-shake 1.5s ease-out forwards;
+    }
+  }
+
+  // When animation completes, trigger particles
+  &:active:hover {
+    .block-particles {
+      animation: particle-explosion 0.6s ease-out 1.5s forwards;
+    }
+
+    .block-icon {
+      animation: icon-fade 0.3s ease-out 1.5s forwards;
+    }
+  }
+
+  // Mobile tap support
+  @media (hover: none) {
+    &:active {
+      .block-breaking-overlay {
+        animation: minecraft-block-break 1.5s steps(1) forwards;
+        opacity: 1;
+      }
+
+      .block-container {
+        animation: block-shake 1.5s ease-out forwards;
+      }
+
+      .block-particles {
+        animation: particle-explosion 0.6s ease-out 1.5s forwards;
+      }
+
+      .block-icon {
+        animation: icon-fade 0.3s ease-out 1.5s forwards;
+      }
+    }
+  }
+}
+
+// Subtle shake effect while breaking
+@keyframes block-shake {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-1px, 1px); }
+  20% { transform: translate(1px, -1px); }
+  30% { transform: translate(-1px, -1px); }
+  40% { transform: translate(1px, 1px); }
+  50% { transform: translate(-1px, 0); }
+  60% { transform: translate(1px, 0); }
+  70% { transform: translate(0, -1px); }
+  80% { transform: translate(0, 1px); }
+  90% { transform: translate(-1px, 1px); }
+}
+
+// Icon fades when block breaks
+@keyframes icon-fade {
+  to {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+
+// Particle explosion effect
+@keyframes particle-explosion {
+  0% {
+    background-image:
+      radial-gradient(2px 2px at 50% 50%, rgba(139, 69, 19, 0.9) 50%, transparent 50%),
+      radial-gradient(2px 2px at 30% 40%, rgba(139, 69, 19, 0.9) 50%, transparent 50%),
+      radial-gradient(2px 2px at 70% 60%, rgba(139, 69, 19, 0.9) 50%, transparent 50%),
+      radial-gradient(2px 2px at 45% 55%, rgba(139, 69, 19, 0.9) 50%, transparent 50%),
+      radial-gradient(2px 2px at 55% 45%, rgba(139, 69, 19, 0.9) 50%, transparent 50%),
+      radial-gradient(2px 2px at 60% 50%, rgba(139, 69, 19, 0.9) 50%, transparent 50%),
+      radial-gradient(2px 2px at 40% 50%, rgba(139, 69, 19, 0.9) 50%, transparent 50%),
+      radial-gradient(2px 2px at 50% 60%, rgba(139, 69, 19, 0.9) 50%, transparent 50%);
+    background-size: 4px 4px, 4px 4px, 4px 4px, 4px 4px, 4px 4px, 4px 4px, 4px 4px, 4px 4px;
+    background-position: 50% 50%, 30% 40%, 70% 60%, 45% 55%, 55% 45%, 60% 50%, 40% 50%, 50% 60%;
+    opacity: 1;
+  }
+  50% {
+    background-position: 50% 20%, 10% 30%, 90% 70%, 35% 75%, 75% 25%, 85% 45%, 15% 55%, 50% 85%;
+    opacity: 0.7;
+  }
+  100% {
+    background-position: 50% 0%, 0% 20%, 100% 80%, 25% 95%, 95% 15%, 100% 40%, 0% 60%, 50% 100%;
+    opacity: 0;
+  }
+}
+
+// Minecraft block breaking animation with simpler crack patterns (10 stages)
+@keyframes minecraft-block-break {
+  0% {
+    // Stage 0 - No cracks
+    background-image: none;
+    opacity: 0;
+  }
+  10% {
+    // Stage 1 - First tiny cracks
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><rect x="7" y="6" width="2" height="1" fill="%23000"/><rect x="8" y="7" width="1" height="2" fill="%23000"/><rect x="6" y="9" width="2" height="1" fill="%23000"/></svg>');
+    opacity: 0.7;
+  }
+  20% {
+    // Stage 2 - Small cracks spreading
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><rect x="6" y="5" width="3" height="1" fill="%23000"/><rect x="8" y="6" width="1" height="3" fill="%23000"/><rect x="5" y="8" width="3" height="1" fill="%23000"/><rect x="7" y="9" width="2" height="1" fill="%23000"/><rect x="9" y="10" width="2" height="1" fill="%23000"/></svg>');
+    opacity: 0.75;
+  }
+  30% {
+    // Stage 3 - Cracks growing
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><rect x="5" y="4" width="4" height="1" fill="%23000"/><rect x="8" y="5" width="1" height="4" fill="%23000"/><rect x="4" y="7" width="4" height="1" fill="%23000"/><rect x="6" y="8" width="1" height="3" fill="%23000"/><rect x="7" y="10" width="3" height="1" fill="%23000"/><rect x="10" y="9" width="2" height="1" fill="%23000"/></svg>');
+    opacity: 0.8;
+  }
+  40% {
+    // Stage 4 - Medium cracks
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><rect x="4" y="3" width="5" height="1" fill="%23000"/><rect x="8" y="4" width="1" height="5" fill="%23000"/><rect x="3" y="6" width="5" height="1" fill="%23000"/><rect x="5" y="7" width="1" height="4" fill="%23000"/><rect x="6" y="10" width="4" height="1" fill="%23000"/><rect x="10" y="8" width="3" height="1" fill="%23000"/><rect x="11" y="5" width="1" height="3" fill="%23000"/></svg>');
+    opacity: 0.82;
+  }
+  50% {
+    // Stage 5 - Cracks spreading wider
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><rect x="3" y="2" width="6" height="1" fill="%23000"/><rect x="8" y="3" width="1" height="6" fill="%23000"/><rect x="2" y="5" width="6" height="1" fill="%23000"/><rect x="4" y="6" width="1" height="5" fill="%23000"/><rect x="5" y="10" width="5" height="1" fill="%23000"/><rect x="10" y="7" width="4" height="1" fill="%23000"/><rect x="11" y="4" width="1" height="4" fill="%23000"/><rect x="9" y="11" width="3" height="1" fill="%23000"/></svg>');
+    opacity: 0.85;
+  }
+  60% {
+    // Stage 6 - Heavy cracks
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><rect x="2" y="1" width="7" height="1" fill="%23000"/><rect x="8" y="2" width="1" height="7" fill="%23000"/><rect x="1" y="4" width="7" height="1" fill="%23000"/><rect x="3" y="5" width="1" height="6" fill="%23000"/><rect x="4" y="10" width="6" height="1" fill="%23000"/><rect x="10" y="6" width="5" height="1" fill="%23000"/><rect x="11" y="3" width="1" height="5" fill="%23000"/><rect x="9" y="11" width="4" height="1" fill="%23000"/><rect x="5" y="12" width="3" height="1" fill="%23000"/></svg>');
+    opacity: 0.88;
+  }
+  70% {
+    // Stage 7 - Extensive cracking
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><rect x="1" y="0" width="8" height="1" fill="%23000"/><rect x="8" y="1" width="1" height="8" fill="%23000"/><rect x="0" y="3" width="8" height="1" fill="%23000"/><rect x="2" y="4" width="1" height="7" fill="%23000"/><rect x="3" y="10" width="7" height="1" fill="%23000"/><rect x="10" y="5" width="6" height="1" fill="%23000"/><rect x="11" y="2" width="1" height="6" fill="%23000"/><rect x="9" y="11" width="5" height="1" fill="%23000"/><rect x="4" y="12" width="4" height="1" fill="%23000"/><rect x="12" y="8" width="3" height="1" fill="%23000"/></svg>');
+    opacity: 0.9;
+  }
+  80% {
+    // Stage 8 - Near breaking
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><rect x="0" y="0" width="9" height="1" fill="%23000"/><rect x="8" y="0" width="1" height="9" fill="%23000"/><rect x="0" y="2" width="9" height="1" fill="%23000"/><rect x="1" y="3" width="1" height="8" fill="%23000"/><rect x="2" y="10" width="8" height="1" fill="%23000"/><rect x="10" y="4" width="6" height="1" fill="%23000"/><rect x="11" y="1" width="1" height="7" fill="%23000"/><rect x="9" y="11" width="6" height="1" fill="%23000"/><rect x="3" y="12" width="5" height="1" fill="%23000"/><rect x="12" y="7" width="4" height="1" fill="%23000"/><rect x="5" y="5" width="3" height="1" fill="%23000"/></svg>');
+    opacity: 0.92;
+  }
+  90% {
+    // Stage 9 - Almost completely broken
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><rect x="0" y="0" width="10" height="1" fill="%23000"/><rect x="8" y="0" width="1" height="10" fill="%23000"/><rect x="0" y="2" width="10" height="1" fill="%23000"/><rect x="0" y="3" width="1" height="9" fill="%23000"/><rect x="1" y="10" width="9" height="1" fill="%23000"/><rect x="10" y="3" width="6" height="1" fill="%23000"/><rect x="11" y="0" width="1" height="8" fill="%23000"/><rect x="9" y="11" width="7" height="1" fill="%23000"/><rect x="2" y="12" width="6" height="1" fill="%23000"/><rect x="12" y="6" width="4" height="1" fill="%23000"/><rect x="4" y="5" width="4" height="1" fill="%23000"/><rect x="5" y="7" width="3" height="1" fill="%23000"/></svg>');
+    opacity: 0.95;
+  }
+  100% {
+    // Stage 10 - Fully broken
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><rect x="0" y="0" width="16" height="1" fill="%23000"/><rect x="0" y="2" width="16" height="1" fill="%23000"/><rect x="0" y="4" width="16" height="1" fill="%23000"/><rect x="0" y="6" width="16" height="1" fill="%23000"/><rect x="0" y="8" width="16" height="1" fill="%23000"/><rect x="0" y="10" width="16" height="1" fill="%23000"/><rect x="0" y="12" width="16" height="1" fill="%23000"/><rect x="0" y="14" width="16" height="1" fill="%23000"/><rect x="0" y="0" width="1" height="16" fill="%23000"/><rect x="3" y="0" width="1" height="16" fill="%23000"/><rect x="6" y="0" width="1" height="16" fill="%23000"/><rect x="9" y="0" width="1" height="16" fill="%23000"/><rect x="12" y="0" width="1" height="16" fill="%23000"/><rect x="15" y="0" width="1" height="16" fill="%23000"/></svg>');
+    opacity: 1;
+  }
+}
+
+.minecraft-card {
+  @apply bg-gray-800 border-8 overflow-hidden shadow-2xl;
+  image-rendering: pixelated;
+
+  &:hover {
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+  }
+}
+
+.minecraft-input {
+  @apply bg-gray-800 border-4 border-gray-700 text-white px-4 py-3 text-center font-mono;
+  font-family: 'MinecraftSignText', monospace;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  &:focus {
+    @apply outline-none border-gray-500;
+  }
+}
+
+.minecraft-image-card {
+  @apply relative border-8 overflow-hidden cursor-pointer;
+  image-rendering: pixelated;
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 40px rgba(255, 255, 255, 0.3);
+  }
+}
+
+// Three.js canvas container
+canvas {
+  display: block;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+.font-minecraft {
+  font-family: 'Minecraft', 'Mojangles', 'Press Start 2P', monospace, sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Minecraft Dirt/Earth Texture Background using image
+.minecraft-dirt-bg {
+  background-image: url('/images/grass.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: repeat;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+// Minecraft Block Textures for Block Features
+.minecraft-iron-block {
+  background-image: url('/images/iron_block.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+.minecraft-gold-block {
+  background-image: url('/images/gold_block.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+.minecraft-diamond-block {
+  background-image: url('/images/diamond_block.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+// Pixelated effect
+* {
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-crisp-edges;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+// Notification Toast
+.minecraft-notification {
+  font-family: 'MinecraftSignText', monospace;
+  letter-spacing: 1px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  image-rendering: pixelated;
+  animation: slide-in 0.3s ease-out, slide-out 0.3s ease-in 1.7s;
+}
+
+// Server Tabs (Large Image Cards)
+.server-tab-card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  background-color: rgb(31 41 55);
+  border: 6px solid rgb(55 65 81);
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-crisp-edges;
+  image-rendering: crisp-edges;
+
+  img {
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-crisp-edges;
+    image-rendering: crisp-edges;
+    transition: transform 0.4s ease;
+  }
+
+  &:hover {
+    border-color: rgb(75 85 99);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+
+    img {
+      transform: scale(1.05);
+    }
+  }
+
+  &.active {
+    border-color: rgb(34 197 94);
+    border-width: 8px;
+    transform: scale(1.08) translateY(-4px);
+    box-shadow: 0 0 32px rgba(34, 197, 94, 0.7), 0 12px 24px rgba(0, 0, 0, 0.5);
+    z-index: 10;
+
+    &::after {
+      content: '✓';
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background-color: rgb(34 197 94);
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: bold;
+      border: 4px solid white;
+      z-index: 10;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    &:hover {
+      border-color: rgb(22 163 74);
+      transform: scale(1.1) translateY(-6px);
+    }
+  }
+
+  &:active {
+    transform: translateY(-2px);
+  }
+}
+
+.server-tab-name {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.7) 70%, transparent 100%);
+  color: white;
+  font-family: 'MinecraftSignText', 'Minecraft', monospace;
+  font-size: 1rem;
+  padding: 1rem 0.5rem;
+  text-align: center;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+
+  .server-tab-card:hover &,
+  .server-tab-card.active & {
+    opacity: 1;
+  }
+}
+
+// Mobile Server Tab Cards
+.server-tab-card-mobile {
+  position: relative;
+  width: 100%;
+  background-color: rgb(31 41 55);
+  border: 4px solid rgb(55 65 81);
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-crisp-edges;
+  image-rendering: crisp-edges;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-crisp-edges;
+    image-rendering: crisp-edges;
+  }
+
+  &:hover {
+    border-color: rgb(75 85 99);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  &.active {
+    border-color: rgb(34 197 94);
+    border-width: 6px;
+    box-shadow: 0 0 24px rgba(34, 197, 94, 0.6), 0 8px 16px rgba(0, 0, 0, 0.5);
+
+    &::after {
+      content: '✓';
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background-color: rgb(34 197 94);
+      color: white;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: bold;
+      border: 3px solid white;
+      z-index: 10;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    }
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.server-tab-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.7) 80%, transparent 100%);
+  color: white;
+  font-family: 'MinecraftSignText', 'Minecraft', monospace;
+  font-size: 0.65rem;
+  padding: 0.5rem 0.25rem;
+  text-align: center;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.9);
+  line-height: 1.2;
+}
+
+.server-tab-label-large {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.7) 70%, transparent 100%);
+  color: white;
+  font-family: 'MinecraftSignText', 'Minecraft', monospace;
+  font-size: 1.125rem;
+  padding: 1rem 0.5rem;
+  text-align: center;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
+  line-height: 1.3;
+}
+
+
+// Old server tab styles (can be removed if not used elsewhere)
+.server-tab {
+  padding: 1rem 1.5rem;
+  background-color: rgb(55 65 81);
+  color: white;
+  transition: all 0.3s ease;
+  border: 4px solid rgb(31 41 55);
+  border-bottom-width: 6px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  image-rendering: pixelated;
+  font-family: 'MinecraftSignText', monospace;
+  letter-spacing: 1px;
+  min-height: 100px;
+
+  &:hover {
+    background-color: rgb(75 85 99);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  &.active {
+    background-color: rgb(34 197 94);
+    border-color: rgb(22 163 74);
+    color: white;
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(34, 197, 94, 0.4);
+
+    &:hover {
+      background-color: rgb(22 163 74);
+    }
+  }
+
+  &:active {
+    border-bottom-width: 4px;
+    transform: translateY(1px);
+  }
+
+  @media (max-width: 767px) {
+    padding: 0.75rem 1rem;
+    min-height: 80px;
+    font-size: 0.875rem;
+  }
+}
+
+.server-tab-image {
+  width: 100%;
+  max-width: 120px;
+  height: 120px;
+  border: 4px solid rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-crisp-edges;
+  image-rendering: crisp-edges;
+
+  img {
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-crisp-edges;
+    image-rendering: crisp-edges;
+  }
+
+  @media (max-width: 767px) {
+    max-width: 80px;
+    height: 80px;
+  }
+}
+
+
+
+@keyframes slide-in {
+  from {
+    transform: translateX(400px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-out {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(400px);
+    opacity: 0;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modal-slide-down {
+  from {
+    transform: translateY(-50px) scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.2s ease-out forwards;
+}
+
+.animate-modal-slide-down {
+  animation: modal-slide-down 0.3s ease-out forwards;
+}
+
+/* Minecraft Features Infinite Scroll */
+.minecraft-features-scroll {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 1.5rem 0;
+  background: rgb(17 24 39);
+  cursor: grab;
+  user-select: none;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+  scroll-behavior: auto; /* Instant repositioning for infinite effect */
+
+  &::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+  }
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.minecraft-features-track {
+  display: flex;
+  gap: 2rem;
+  width: fit-content;
+  padding: 0 2rem;
+  will-change: scroll-position;
+
+  @media (max-width: 640px) {
+    gap: 1.5rem;
+    padding: 0 1rem;
+  }
+}
+
+.minecraft-feature-card {
+  flex-shrink: 0;
+  width: 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.25rem 1rem;
+  background: linear-gradient(to bottom, rgb(139 139 139) 0%, rgb(90 90 90) 100%);
+  border-top: 4px solid rgb(255 255 255);
+  border-left: 4px solid rgb(255 255 255);
+  border-right: 4px solid rgb(55 55 55);
+  border-bottom: 4px solid rgb(55 55 55);
+  box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  pointer-events: auto;
+
+  &:hover {
+    transform: translateY(-6px);
+    filter: brightness(1.2);
+    box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.3),
+                0 8px 16px rgba(0, 0, 0, 0.5);
+  }
+
+  &:active {
+    transform: translateY(-2px);
+    border-top: 4px solid rgb(55 55 55);
+    border-left: 4px solid rgb(55 55 55);
+    border-right: 4px solid rgb(255 255 255);
+    border-bottom: 4px solid rgb(255 255 255);
+  }
+
+  .minecraft-features-scroll:active & {
+    pointer-events: none;
+  }
+
+  @media (max-width: 640px) {
+    width: 110px;
+    padding: 1rem 0.75rem;
+    gap: 0.5rem;
+  }
+}
+
+.minecraft-feature-image {
+  width: 80px;
+  height: 80px;
+  background: rgb(139 139 139);
+  border-top: 2px solid rgb(198 198 198);
+  border-left: 2px solid rgb(198 198 198);
+  border-right: 2px solid rgb(85 85 85);
+  border-bottom: 2px solid rgb(85 85 85);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-crisp-edges;
+    image-rendering: crisp-edges;
+  }
+
+  @media (max-width: 640px) {
+    width: 64px;
+    height: 64px;
+  }
+}
+
+.minecraft-feature-label {
+  font-family: 'MinecraftSignText', 'Minecraft', monospace;
+  font-size: 0.875rem;
+  color: white;
+  text-align: center;
+  line-height: 1.3;
+  word-wrap: break-word;
+  max-width: 100%;
+  text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.8);
+
+  @media (max-width: 640px) {
+    font-size: 0.75rem;
+  }
+}
