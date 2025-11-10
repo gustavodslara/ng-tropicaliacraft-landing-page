@@ -1,91 +1,187 @@
-import { Component, input, signal, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, input, OnDestroy, ViewChild, ElementRef, AfterViewInit, effect, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 export interface ServerFeature {
-  emoji: string;
-  text: string;
+  image: string;
+  label: string;
+  route?: string; // Internal Angular route (e.g., '/products')
+  href?: string; // External link (e.g., 'https://ecraft.tropicaliacraft.online')
+  target?: '_blank' | '_self'; // Target for href links
+}
+
+interface DisplayedFeature extends ServerFeature {
+  id: string;
 }
 
 @Component({
   selector: 'app-infinite-scroll-features',
-  imports: [CommonModule],
-  templateUrl: './infinite-scroll-features.component.html'
+  imports: [CommonModule, RouterLink],
+  templateUrl: './infinite-scroll-features.component.html',
+  styleUrl: './infinite-scroll-features.component.scss'
 })
-export class InfiniteScrollFeaturesComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild('scrollContainer', { static: false }) scrollContainer!: ElementRef<HTMLDivElement>;
+export class InfiniteScrollFeaturesComponent implements AfterViewInit, OnDestroy {
+  @ViewChild('serverFeaturesScroll', { static: false }) serverFeaturesScrollRef?: ElementRef<HTMLElement>;
 
   features = input.required<ServerFeature[]>();
+  
+  // Displayed features - will be dynamically reordered
+  displayedFeatures = signal<DisplayedFeature[]>([]);
 
-  displayFeatures = signal<ServerFeature[]>([]);
-  isDragging = signal(false);
-  startX = signal(0);
-  scrollLeft = signal(0);
-  isPaused = signal(false);
+  private serverFeaturesAnimationId?: number;
+  private isUserScrolling = false;
+  private scrollResumeTimeout?: any;
+  private serverFeaturesScrollAccumulator = 0;
+  private lastScrollLeft = 0;
 
-  private scrollAnimationId?: number;
-  private scrollSpeed = 1;
-
-  ngOnInit(): void {
-    // Create 3 sets for infinite scroll
-    const original = this.features();
-    this.displayFeatures.set([...original, ...original, ...original]);
+  constructor() {
+    // Initialize displayed features when input changes
+    effect(() => {
+      const inputFeatures = this.features();
+      if (inputFeatures && inputFeatures.length > 0) {
+        // Create initial display with enough copies to fill screen + buffer
+        const initialDisplay: DisplayedFeature[] = [];
+        // Duplicate features 4 times to ensure smooth scrolling
+        for (let i = 0; i < 4; i++) {
+          inputFeatures.forEach((feature, idx) => {
+            const displayFeature: DisplayedFeature = {
+              image: feature.image,
+              label: feature.label,
+              route: feature.route,
+              href: feature.href,
+              target: feature.target,
+              id: `${feature.label}_${i}_${idx}`
+            };
+            initialDisplay.push(displayFeature);
+          });
+        }
+        this.displayedFeatures.set(initialDisplay);
+      }
+    });
   }
 
   ngAfterViewInit(): void {
-    // Start auto-scroll animation
-    this.startAutoScroll();
+    setTimeout(() => {
+      console.log('⏰ Starting infinite scroll with repositioning...');
+      this.startServerFeaturesScroll();
+    }, 100);
   }
 
   ngOnDestroy(): void {
-    if (this.scrollAnimationId) {
-      cancelAnimationFrame(this.scrollAnimationId);
+    if (this.serverFeaturesAnimationId) {
+      cancelAnimationFrame(this.serverFeaturesAnimationId);
+    }
+    if (this.scrollResumeTimeout) {
+      clearTimeout(this.scrollResumeTimeout);
     }
   }
 
-  private startAutoScroll(): void {
-    const scroll = () => {
-      if (!this.isDragging() && !this.isPaused() && this.scrollContainer) {
-        const container = this.scrollContainer.nativeElement;
-        container.scrollLeft += this.scrollSpeed;
+  private startServerFeaturesScroll(): void {
+    if (!this.serverFeaturesScrollRef) {
+      console.log('❌ Server features scroll - ViewChild not found');
+      return;
+    }
 
-        // Reset scroll position for infinite effect
-        const maxScroll = container.scrollWidth / 3;
-        if (container.scrollLeft >= maxScroll * 2) {
-          container.scrollLeft = maxScroll;
+    if (this.isUserScrolling) return;
+
+    const container = this.serverFeaturesScrollRef.nativeElement;
+    const isMobile = window.innerWidth < 768;
+    const scrollSpeed = isMobile ? 0.8 : 0.5;
+
+    console.log('🔄 Starting true infinite scroll - Speed:', scrollSpeed, 'px/frame');
+
+    const animate = () => {
+      if (!this.serverFeaturesScrollRef || this.isUserScrolling) return;
+
+      const container = this.serverFeaturesScrollRef.nativeElement;
+      
+      // Accumulate fractional scroll values
+      this.serverFeaturesScrollAccumulator += scrollSpeed;
+
+      // Only apply scroll when we've accumulated at least 1 pixel
+      if (this.serverFeaturesScrollAccumulator >= 1) {
+        const pixelsToScroll = Math.floor(this.serverFeaturesScrollAccumulator);
+        container.scrollLeft += pixelsToScroll;
+        this.serverFeaturesScrollAccumulator -= pixelsToScroll;
+      }
+
+      // Check if items need to be repositioned
+      this.repositionItems();
+
+      this.serverFeaturesAnimationId = requestAnimationFrame(animate);
+    };
+
+    this.serverFeaturesAnimationId = requestAnimationFrame(animate);
+  }
+
+  private repositionItems(): void {
+    if (!this.serverFeaturesScrollRef) return;
+
+    const container = this.serverFeaturesScrollRef.nativeElement;
+    const children = Array.from(container.children) as HTMLElement[];
+    
+    if (children.length === 0) return;
+
+    const scrollLeft = container.scrollLeft;
+    const containerWidth = container.clientWidth;
+    
+    // Find items that have scrolled completely out of view on the left
+    children.forEach((child, index) => {
+      const rect = child.getBoundingClientRect();
+      const containerRect = container.getBoundingClientRect();
+      
+      // If item has completely scrolled past the left edge
+      if (rect.right < containerRect.left - 100) {
+        // Get the last child's position
+        const lastChild = children[children.length - 1];
+        const lastChildRect = lastChild.getBoundingClientRect();
+        
+        // Move this item to the end
+        const currentFeatures = this.displayedFeatures();
+        const movedFeature = currentFeatures[index];
+        
+        if (movedFeature) {
+          // Remove from current position and add to end
+          const newFeature: DisplayedFeature = {
+            image: movedFeature.image,
+            label: movedFeature.label,
+            route: movedFeature.route,
+            href: movedFeature.href,
+            target: movedFeature.target,
+            id: `${movedFeature.label}_${Date.now()}_${Math.random()}`
+          };
+          
+          const newFeatures = [
+            ...currentFeatures.slice(0, index),
+            ...currentFeatures.slice(index + 1),
+            newFeature
+          ];
+          
+          // Calculate how much we need to adjust scroll to prevent jump
+          const itemWidth = child.offsetWidth;
+          const gap = 32; // 2rem gap from CSS
+          
+          this.displayedFeatures.set(newFeatures);
+          
+          // Adjust scroll position to compensate for DOM reordering
+          // We need to do this in the next frame after DOM updates
+          requestAnimationFrame(() => {
+            if (this.serverFeaturesScrollRef) {
+              this.serverFeaturesScrollRef.nativeElement.scrollLeft -= (itemWidth + gap);
+            }
+          });
         }
       }
-      this.scrollAnimationId = requestAnimationFrame(scroll);
-    };
-    this.scrollAnimationId = requestAnimationFrame(scroll);
+    });
   }
 
-  onMouseDown(e: MouseEvent): void {
-    this.isDragging.set(true);
-    this.startX.set(e.pageX - this.scrollContainer.nativeElement.offsetLeft);
-    this.scrollLeft.set(this.scrollContainer.nativeElement.scrollLeft);
+  private stopServerFeaturesScroll(): void {
+    if (this.serverFeaturesAnimationId) {
+      cancelAnimationFrame(this.serverFeaturesAnimationId);
+      this.serverFeaturesAnimationId = undefined;
+    }
+    this.serverFeaturesScrollAccumulator = 0;
   }
 
-  onMouseLeave(): void {
-    this.isDragging.set(false);
-  }
-
-  onMouseUp(): void {
-    this.isDragging.set(false);
-  }
-
-  onMouseMove(e: MouseEvent): void {
-    if (!this.isDragging()) return;
-    e.preventDefault();
-    const x = e.pageX - this.scrollContainer.nativeElement.offsetLeft;
-    const walk = (x - this.startX()) * 2;
-    this.scrollContainer.nativeElement.scrollLeft = this.scrollLeft() - walk;
-  }
-
-  onMouseEnter(): void {
-    this.isPaused.set(true);
-  }
-
-  onMouseLeaveContainer(): void {
-    this.isPaused.set(false);
-  }
 }
+

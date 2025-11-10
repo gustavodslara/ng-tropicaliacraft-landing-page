@@ -1,0 +1,49 @@
+/* Infinite Horizontal Auto-Scroll for Feature Cards */
+.infinite-scroll-wrapper {
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+}
+
+.infinite-scroll-content {
+  display: flex;
+  gap: 2rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+  scroll-behavior: smooth;
+  cursor: grab;
+  user-select: none;
+  -webkit-overflow-scrolling: touch; /* Enable momentum scrolling on iOS */
+  
+  &:active {
+    cursor: grabbing;
+  }
+  
+  // Hide scrollbar completely
+  &::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+  }
+}
+
+.minecraft-card {
+  @apply bg-gray-800 border-8 overflow-hidden shadow-2xl;
+  image-rendering: pixelated;
+  flex-shrink: 0; /* Prevent cards from shrinking in flex container */
+  width: 350px; /* Fixed width for infinite scroll to work properly */
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+  }
+
+  @media (max-width: 768px) {
+    width: 280px;
+  }
+
+  @media (max-width: 480px) {
+    width: 240px;
+  }
+}

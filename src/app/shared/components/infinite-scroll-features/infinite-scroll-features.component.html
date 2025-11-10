@@ -1,29 +1,43 @@
-<div class="relative mb-12 overflow-hidden">
-  <div
-    #scrollContainer
-    (mousedown)="onMouseDown($event)"
-    (mouseleave)="onMouseLeave()"
-    (mouseup)="onMouseUp()"
-    (mousemove)="onMouseMove($event)"
-    (mouseenter)="onMouseEnter()"
-    (mouseleave)="onMouseLeaveContainer()"
-    class="flex space-x-4 overflow-x-auto scrollbar-hide py-4 px-4"
-    [class.cursor-grab]="!isDragging()"
-    [class.cursor-grabbing]="isDragging()">
-    @for (feature of displayFeatures(); track $index) {
-    <div
-      class="flex-shrink-0 bg-gray-800 border-4 border-gray-600 rounded-lg px-6 py-3 hover:border-yellow-500 transition-colors duration-300">
-      <span class="text-2xl mr-3">{{ feature.emoji }}</span>
-      <span class="font-minecraft-sign text-white text-sm whitespace-nowrap">{{ feature.text }}</span>
+<!-- Server Features - Infinite Horizontal Scroll - Full Width -->
+<div class="w-full py-12 pb-0 pt-0">
+  <div class="server-features-scroll-wrapper">
+    <div #serverFeaturesScroll class="server-features-scroll-content">
+      @for (feature of displayedFeatures(); track feature.id) {
+      <!-- Card with internal route -->
+      @if (feature.route) {
+      <a [routerLink]="feature.route" class="minecraft-feature-card">
+        <div class="minecraft-feature-image">
+          <img [src]="feature.image" [alt]="feature.label" loading="lazy" />
+        </div>
+        <div class="minecraft-feature-label">
+          {{ feature.label }}
+        </div>
+      </a>
+      }
+      <!-- Card with external link -->
+      @else if (feature.href) {
+      <a [href]="feature.href" [target]="feature.target || '_blank'"
+        [rel]="feature.target === '_blank' ? 'noopener noreferrer' : ''" class="minecraft-feature-card">
+        <div class="minecraft-feature-image">
+          <img [src]="feature.image" [alt]="feature.label" loading="lazy" />
+        </div>
+        <div class="minecraft-feature-label">
+          {{ feature.label }}
+        </div>
+      </a>
+      }
+      <!-- Card without link -->
+      @else {
+      <div class="minecraft-feature-card">
+        <div class="minecraft-feature-image">
+          <img [src]="feature.image" [alt]="feature.label" loading="lazy" />
+        </div>
+        <div class="minecraft-feature-label">
+          {{ feature.label }}
+        </div>
+      </div>
+      }
+      }
     </div>
-    }
-  </div>
-
-  <!-- Gradient Overlays -->
-  <div
-    class="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-gray-900 to-transparent pointer-events-none">
-  </div>
-  <div
-    class="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-gray-900 to-transparent pointer-events-none">
   </div>
 </div>

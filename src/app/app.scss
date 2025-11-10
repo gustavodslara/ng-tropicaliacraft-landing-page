@@ -1,0 +1,7 @@
+/* Prevent horizontal scroll at the root level - using overflow-clip to preserve sticky positioning */
+:host {
+  display: block;
+  max-width: 100vw;
+  overflow-x: clip;
+  width: 100%;
+}

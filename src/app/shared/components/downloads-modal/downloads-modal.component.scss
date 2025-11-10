@@ -1,0 +1,533 @@
+// Downloads Modal animations and styles
+// Pixelated Minecraft-themed styling
+
+/* Minecraft Modal Border (no rounded corners - pixelated) */
+.minecraft-modal-border {
+  border: none;
+  box-shadow:
+    inset 0 4px 0 0 #4B5563,      // Top inner border
+    inset 4px 0 0 0 #4B5563,       // Left inner border
+    inset -4px 0 0 0 #1F2937,      // Right inner shadow
+    inset 0 -4px 0 0 #1F2937,      // Bottom inner shadow
+    0 0 0 8px #111827,              // Outer black border
+    0 20px 50px rgba(0, 0, 0, 0.8); // Outer shadow
+  image-rendering: pixelated;
+  border-radius: 0; // No rounding - pure pixels
+
+  @media (max-width: 640px) {
+    box-shadow:
+      inset 0 2px 0 0 #4B5563,
+      inset 2px 0 0 0 #4B5563,
+      inset -2px 0 0 0 #1F2937,
+      inset 0 -2px 0 0 #1F2937,
+      0 0 0 4px #111827,
+      0 10px 30px rgba(0, 0, 0, 0.8);
+  }
+}
+
+/* Minecraft Card Border (for download cards) */
+.minecraft-card-border {
+  border: none;
+  box-shadow:
+    inset 0 4px 0 0 #4B5563,
+    inset 4px 0 0 0 #4B5563,
+    inset -4px 0 0 0 #1F2937,
+    inset 0 -4px 0 0 #1F2937,
+    0 0 0 4px #000000;
+  border-radius: 0;
+  image-rendering: pixelated;
+  transition: all 0.2s ease;
+
+  &:hover {
+    box-shadow:
+      inset 0 4px 0 0 #10B981,
+      inset 4px 0 0 0 #10B981,
+      inset -4px 0 0 0 #065F46,
+      inset 0 -4px 0 0 #065F46,
+      0 0 0 4px #000000,
+      0 0 20px rgba(16, 185, 129, 0.5);
+  }
+}
+
+.minecraft-card-border-bottom {
+  border-bottom: 4px solid #1F2937;
+  box-shadow: inset 0 -4px 0 0 #4B5563;
+}
+
+/* Minecraft Text Shadow */
+.minecraft-text-shadow {
+  text-shadow:
+    4px 4px 0 rgba(0, 0, 0, 0.8),
+    6px 6px 0 rgba(0, 0, 0, 0.4);
+}
+
+.minecraft-text-shadow-sm {
+  text-shadow:
+    2px 2px 0 rgba(0, 0, 0, 0.8),
+    3px 3px 0 rgba(0, 0, 0, 0.4);
+}
+
+/* Minecraft Badge - No rounding */
+.minecraft-badge {
+  border: none;
+  border-radius: 0;
+  box-shadow:
+    inset 0 2px 0 0 rgba(255, 255, 255, 0.3),
+    inset 2px 0 0 0 rgba(255, 255, 255, 0.2),
+    inset -2px 0 0 0 rgba(0, 0, 0, 0.3),
+    inset 0 -2px 0 0 rgba(0, 0, 0, 0.3),
+    0 0 0 1px #000000;
+  image-rendering: pixelated;
+}
+
+/* Minecraft Info Box */
+.minecraft-info-box {
+  border: none;
+  box-shadow:
+    inset 0 4px 0 0 #3B82F6,
+    inset 4px 0 0 0 #3B82F6,
+    inset -4px 0 0 0 #1E3A8A,
+    inset 0 -4px 0 0 #1E3A8A,
+    0 0 0 4px #000000;
+  border-radius: 0;
+  image-rendering: pixelated;
+}
+
+.minecraft-download-card {
+  position: relative;
+  cursor: pointer;
+  image-rendering: pixelated;
+  display: flex;
+  flex-direction: column;
+  
+  // Ensure all cards have equal height on mobile
+  min-height: 400px;
+  
+  // On desktop, let grid handle equal heights
+  @media (min-width: 768px) {
+    min-height: 0;
+    height: 100%;
+  }
+  
+  &:hover {
+    box-shadow:
+      inset 0 4px 0 0 #10B981,
+      inset 4px 0 0 0 #10B981,
+      inset -4px 0 0 0 #065F46,
+      inset 0 -4px 0 0 #065F46,
+      0 0 0 4px #000000,
+      0 0 30px rgba(34, 197, 94, 0.6);
+  }
+}
+
+// Authentic Minecraft UI Button (like in the game)
+.minecraft-ui-button {
+  position: relative;
+  padding: 0.75rem 2rem;
+  font-family: 'MinecraftSignText', monospace;
+  font-size: 1.1rem;
+  font-weight: normal;
+  letter-spacing: 1.5px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #FFFFFF;
+  text-shadow: 4px 4px 0px #4C4C4C;
+
+  // Stone texture background
+  background-image: url('/images/stone.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  cursor: pointer;
+  image-rendering: pixelated;
+  user-select: none;
+
+  // Minecraft button borders (light top, dark bottom for 3D effect)
+  border: none;
+  box-shadow:
+    inset 0 2px 0 0 #E3E3E3,      // Top highlight (light grey)
+    inset 2px 0 0 0 #C6C6C6,      // Left highlight
+    inset -2px 0 0 0 #373737,     // Right shadow (dark grey)
+    inset 0 -2px 0 0 #252525,     // Bottom shadow (very dark)
+    0 0 0 2px #000000;             // Outer black border
+
+  transition: all 0.05s ease;
+
+  @media (min-width: 640px) {
+    padding: 1rem 3rem;
+    font-size: 1.25rem;
+  }
+
+  // Hover state - slightly brighter with overlay
+  &:hover {
+    background-image: url('/images/stone.jpg');
+    background-size: cover;
+    background-position: center;
+    filter: brightness(1.15);
+    box-shadow:
+      inset 0 2px 0 0 #F0F0F0,
+      inset 2px 0 0 0 #D3D3D3,
+      inset -2px 0 0 0 #464646,
+      inset 0 -2px 0 0 #343434,
+      0 0 0 2px #000000;
+  }
+
+  // Active/pressed state
+  &:active {
+    background-image: url('/images/stone.jpg');
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.85);
+    box-shadow:
+      inset 0 2px 0 0 #8A8A8A,
+      inset 2px 0 0 0 #7A7A7A,
+      inset -2px 0 0 0 #2A2A2A,
+      inset 0 -2px 0 0 #1A1A1A,
+      0 0 0 2px #000000;
+    transform: translateY(1px);
+  }
+
+  // Disabled state (if needed)
+  &:disabled {
+    background-image: url('/images/stone.jpg');
+    background-size: cover;
+    background-position: center;
+    filter: grayscale(0.5) brightness(0.7);
+    color: #A0A0A0;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+// Version Badge Button (clickable dropdown trigger)
+.minecraft-version-badge-button {
+  background-color: #2563EB;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 0;
+  box-shadow:
+    inset 0 2px 0 0 rgba(255, 255, 255, 0.3),
+    inset 2px 0 0 0 rgba(255, 255, 255, 0.2),
+    inset -2px 0 0 0 rgba(0, 0, 0, 0.3),
+    inset 0 -2px 0 0 rgba(0, 0, 0, 0.3),
+    0 0 0 1px #000000;
+  image-rendering: pixelated;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+
+  &:hover {
+    background-color: #1D4ED8;
+    box-shadow:
+      inset 0 2px 0 0 rgba(255, 255, 255, 0.4),
+      inset 2px 0 0 0 rgba(255, 255, 255, 0.3),
+      inset -2px 0 0 0 rgba(0, 0, 0, 0.4),
+      inset 0 -2px 0 0 rgba(0, 0, 0, 0.4),
+      0 0 0 1px #000000,
+      0 0 10px rgba(37, 99, 235, 0.5);
+  }
+
+  &:active,
+  &.dropdown-open {
+    background-color: #1E40AF;
+    box-shadow:
+      inset 0 2px 0 0 rgba(0, 0, 0, 0.3),
+      inset 2px 0 0 0 rgba(0, 0, 0, 0.2),
+      inset -2px 0 0 0 rgba(255, 255, 255, 0.2),
+      inset 0 -2px 0 0 rgba(255, 255, 255, 0.1),
+      0 0 0 1px #000000;
+  }
+
+  svg {
+    vertical-align: middle;
+  }
+}
+
+// Static Version Badge (non-clickable)
+.minecraft-version-badge-static {
+  background-color: #2563EB;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 0;
+  box-shadow:
+    inset 0 2px 0 0 rgba(255, 255, 255, 0.3),
+    inset 2px 0 0 0 rgba(255, 255, 255, 0.2),
+    inset -2px 0 0 0 rgba(0, 0, 0, 0.3),
+    inset 0 -2px 0 0 rgba(0, 0, 0, 0.3),
+    0 0 0 1px #000000;
+  image-rendering: pixelated;
+}
+
+// Dropdown Menu Container
+.minecraft-dropdown-menu {
+  border: none;
+  box-shadow:
+    inset 0 2px 0 0 #4B5563,
+    inset 2px 0 0 0 #4B5563,
+    inset -2px 0 0 0 #1F2937,
+    inset 0 -2px 0 0 #1F2937,
+    0 0 0 2px #000000,
+    0 4px 12px rgba(0, 0, 0, 0.6);
+  border-radius: 0;
+  image-rendering: pixelated;
+  max-height: 200px;
+  overflow-y: auto;
+  
+  // Custom scrollbar for dropdown
+  scrollbar-width: thin;
+  scrollbar-color: #2563EB #374151;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #374151;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #2563EB;
+    border: 1px solid #000000;
+
+    &:hover {
+      background: #1D4ED8;
+    }
+  }
+}
+
+// Dropdown Menu Items
+.minecraft-dropdown-item {
+  border: none;
+  color: #FFFFFF;
+  background-color: transparent;
+  border-bottom: 2px solid #1F2937;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  text-align: left;
+  display: block;
+  width: 100%;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:hover {
+    background-color: #2563EB;
+    
+    .minecraft-badge {
+      background-color: #1E40AF;
+      box-shadow:
+        inset 0 2px 0 0 rgba(255, 255, 255, 0.4),
+        inset 2px 0 0 0 rgba(255, 255, 255, 0.3),
+        inset -2px 0 0 0 rgba(0, 0, 0, 0.4),
+        inset 0 -2px 0 0 rgba(0, 0, 0, 0.4),
+        0 0 0 1px #000000;
+    }
+  }
+
+  &.selected {
+    background-color: #1E40AF;
+    
+    .minecraft-badge {
+      background-color: #10B981;
+      box-shadow:
+        inset 0 2px 0 0 rgba(255, 255, 255, 0.4),
+        inset 2px 0 0 0 rgba(255, 255, 255, 0.3),
+        inset -2px 0 0 0 rgba(0, 0, 0, 0.4),
+        inset 0 -2px 0 0 rgba(0, 0, 0, 0.4),
+        0 0 0 1px #000000;
+    }
+  }
+
+  &:active {
+    background-color: #1E3A8A;
+  }
+}
+
+// Info Button (ℹ️)
+.minecraft-info-button {
+  background-color: #3B82F6;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 0;
+  padding: 0.4rem;
+  box-shadow:
+    inset 0 2px 0 0 rgba(255, 255, 255, 0.3),
+    inset 2px 0 0 0 rgba(255, 255, 255, 0.2),
+    inset -2px 0 0 0 rgba(0, 0, 0, 0.3),
+    inset 0 -2px 0 0 rgba(0, 0, 0, 0.3),
+    0 0 0 1px #000000;
+  image-rendering: pixelated;
+  cursor: pointer;
+  transition: all 0.15s ease;
+
+  &:hover {
+    background-color: #2563EB;
+    box-shadow:
+      inset 0 2px 0 0 rgba(255, 255, 255, 0.4),
+      inset 2px 0 0 0 rgba(255, 255, 255, 0.3),
+      inset -2px 0 0 0 rgba(0, 0, 0, 0.4),
+      inset 0 -2px 0 0 rgba(0, 0, 0, 0.4),
+      0 0 0 1px #000000,
+      0 0 10px rgba(59, 130, 246, 0.6);
+  }
+
+  &:active {
+    background-color: #1D4ED8;
+    box-shadow:
+      inset 0 2px 0 0 rgba(0, 0, 0, 0.3),
+      inset 2px 0 0 0 rgba(0, 0, 0, 0.2),
+      inset -2px 0 0 0 rgba(255, 255, 255, 0.2),
+      inset 0 -2px 0 0 rgba(255, 255, 255, 0.1),
+      0 0 0 1px #000000;
+  }
+
+  svg {
+    display: block;
+  }
+}
+
+// Official Store Buttons (Google Play / App Store)
+.official-store-button {
+  display: inline-block;
+  cursor: pointer;
+  text-decoration: none;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
+  
+  &:hover {
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.4)) brightness(1.1);
+  }
+
+  &:active {
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4)) brightness(0.95);
+  }
+}
+
+// Store Badge Images - Equal visual sizing
+.store-badge-img {
+  display: block;
+  image-rendering: auto; // Use smooth rendering for official badges
+  object-fit: contain;
+  max-width: 100%;
+}
+
+// Google Play badge (has extra padding in the image, so make it bigger)
+.google-play-badge {
+  height: 64px; // Larger to compensate for padding
+  width: auto;
+  
+  @media (min-width: 640px) {
+    height: 72px;
+  }
+  
+  @media (min-width: 768px) {
+    height: 80px;
+  }
+}
+
+// App Store badge (more compact, use smaller size)
+.app-store-badge {
+  height: 40px; // Smaller since it has no padding
+  width: auto;
+  
+  @media (min-width: 640px) {
+    height: 48px;
+  }
+  
+  @media (min-width: 768px) {
+    height: 54px;
+  }
+}
+
+// Section Headers (Launchers / Modpacks)
+.minecraft-section-header {
+  text-shadow:
+    3px 3px 0 rgba(0, 0, 0, 0.8),
+    4px 4px 0 rgba(0, 0, 0, 0.4);
+  
+  @media (max-width: 640px) {
+    text-shadow:
+      2px 2px 0 rgba(0, 0, 0, 0.8),
+      3px 3px 0 rgba(0, 0, 0, 0.4);
+  }
+}
+
+// Mod Card (for mods grid in info modal)
+.minecraft-mod-card {
+  min-height: 70px;
+  transition: all 0.2s ease;
+  cursor: default;
+  
+  @media (min-width: 640px) {
+    min-height: 80px;
+  }
+  
+  @media (min-width: 768px) {
+    min-height: 90px;
+  }
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      inset 0 4px 0 0 #10B981,
+      inset 4px 0 0 0 #10B981,
+      inset -4px 0 0 0 #065F46,
+      inset 0 -4px 0 0 #065F46,
+      0 0 0 4px #000000,
+      0 4px 12px rgba(16, 185, 129, 0.4);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(34, 197, 94, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.8);
+  }
+}
+
+/* Minecraft-style scrollbar for modal on desktop */
+@media (min-width: 768px) {
+  /* Firefox */
+  :host ::ng-deep * {
+    scrollbar-width: thin;
+    scrollbar-color: #10b981 #1f2937;
+  }
+
+  /* Webkit browsers (Chrome, Safari, Edge) */
+  :host ::ng-deep ::-webkit-scrollbar {
+    width: 14px;
+    height: 14px;
+  }
+
+  :host ::ng-deep ::-webkit-scrollbar-track {
+    background: #1f2937;
+    border: 2px solid #10b981;
+    box-shadow: inset 0 0 0 2px #064e3b;
+  }
+
+  :host ::ng-deep ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #10b981 0%, #059669 100%);
+    border: 2px solid #065f46;
+    box-shadow: 
+      inset 0 0 0 1px #34d399,
+      0 2px 4px rgba(0, 0, 0, 0.5);
+    
+    &:hover {
+      background: linear-gradient(180deg, #34d399 0%, #10b981 100%);
+      border-color: #10b981;
+    }
+
+    &:active {
+      background: linear-gradient(180deg, #6ee7b7 0%, #34d399 100%);
+      border-color: #34d399;
+    }
+  }
+
+  :host ::ng-deep ::-webkit-scrollbar-corner {
+    background: #1f2937;
+    border: 2px solid #10b981;
+  }
+}

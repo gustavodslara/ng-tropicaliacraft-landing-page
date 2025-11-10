@@ -1,2 +1,304 @@
-// VIP Modal animations and block styles are in home.component.scss
-// This component reuses those styles
+// VIP Modal animations and block styles
+// Pixelated Minecraft-themed styling
+
+/* Minecraft Modal Border (no rounded corners - pixelated) */
+.minecraft-modal-border {
+  border: none;
+  box-shadow:
+    inset 0 4px 0 0 #4B5563,      // Top inner border
+    inset 4px 0 0 0 #4B5563,       // Left inner border
+    inset -4px 0 0 0 #1F2937,      // Right inner shadow
+    inset 0 -4px 0 0 #1F2937,      // Bottom inner shadow
+    0 0 0 8px #111827,              // Outer black border
+    0 20px 50px rgba(0, 0, 0, 0.8); // Outer shadow
+  image-rendering: pixelated;
+  border-radius: 0; // No rounding - pure pixels
+
+  @media (max-width: 640px) {
+    box-shadow:
+      inset 0 2px 0 0 #4B5563,
+      inset 2px 0 0 0 #4B5563,
+      inset -2px 0 0 0 #1F2937,
+      inset 0 -2px 0 0 #1F2937,
+      0 0 0 4px #111827,
+      0 10px 30px rgba(0, 0, 0, 0.8);
+  }
+}
+
+/* Minecraft Text Shadow */
+.minecraft-text-shadow {
+  text-shadow:
+    4px 4px 0 rgba(0, 0, 0, 0.8),
+    6px 6px 0 rgba(0, 0, 0, 0.4);
+}
+
+/* Minecraft-style scrollbar for VIP modal on mobile only */
+@media (max-width: 767px) {
+  /* Firefox */
+  :host ::ng-deep * {
+    scrollbar-width: thin;
+    scrollbar-color: #FBBF24 #1f2937;
+  }
+
+  /* Webkit browsers (Chrome, Safari, Edge) */
+  :host ::ng-deep ::-webkit-scrollbar {
+    width: 14px;
+    height: 14px;
+  }
+
+  :host ::ng-deep ::-webkit-scrollbar-track {
+    background: #1f2937;
+    border: 2px solid #FBBF24;
+    box-shadow: inset 0 0 0 2px #78350F;
+  }
+
+  :host ::ng-deep ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #FBBF24 0%, #F59E0B 100%);
+    border: 2px solid #B45309;
+    box-shadow: 
+      inset 0 0 0 1px #FCD34D,
+      0 2px 4px rgba(0, 0, 0, 0.5);
+    
+    &:hover {
+      background: linear-gradient(180deg, #FCD34D 0%, #FBBF24 100%);
+      border-color: #FBBF24;
+    }
+
+    &:active {
+      background: linear-gradient(180deg, #FEF3C7 0%, #FCD34D 100%);
+      border-color: #FCD34D;
+    }
+  }
+
+  :host ::ng-deep ::-webkit-scrollbar-corner {
+    background: #1f2937;
+    border: 2px solid #FBBF24;
+  }
+}
+
+// Minecraft Block Card with Breaking Animation
+.minecraft-block-card {
+  background-color: rgb(31 41 55);
+  border-width: 8px;
+  overflow: visible;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  image-rendering: pixelated;
+  cursor: pointer;
+  position: relative;
+
+  .block-container {
+    overflow: hidden;
+    position: relative;
+  }
+
+  .block-icon {
+    position: relative;
+    z-index: 1;
+  }
+
+  .block-breaking-overlay {
+    position: absolute;
+    inset: 0;
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0;
+    pointer-events: none;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-crisp-edges;
+    image-rendering: crisp-edges;
+    z-index: 2;
+  }
+
+  .block-particles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 3;
+  }
+
+  &:active {
+    .block-breaking-overlay {
+      animation: minecraft-block-break 1.5s steps(1) forwards;
+      opacity: 1;
+    }
+
+    .block-container {
+      animation: block-shake 1.5s ease-out forwards;
+    }
+  }
+
+  &:active:hover {
+    .block-particles {
+      animation: particle-explosion 0.6s ease-out 1.5s forwards;
+    }
+
+    .block-icon {
+      animation: icon-fade 0.3s ease-out 1.5s forwards;
+    }
+  }
+
+  @media (hover: none) {
+    &:active {
+      .block-breaking-overlay {
+        animation: minecraft-block-break 1.5s steps(1) forwards;
+        opacity: 1;
+      }
+
+      .block-container {
+        animation: block-shake 1.5s ease-out forwards;
+      }
+
+      .block-particles {
+        animation: particle-explosion 0.6s ease-out 1.5s forwards;
+      }
+
+      .block-icon {
+        animation: icon-fade 0.3s ease-out 1.5s forwards;
+      }
+    }
+  }
+}
+
+// Minecraft Block Textures
+.minecraft-iron-block {
+  background-image: url('/images/iron_block.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+.minecraft-gold-block {
+  background-image: url('/images/gold_block.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+.minecraft-diamond-block {
+  background-image: url('/images/diamond_block.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+// Subtle shake effect while breaking
+@keyframes block-shake {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-1px, 1px); }
+  20% { transform: translate(1px, -1px); }
+  30% { transform: translate(-1px, -1px); }
+  40% { transform: translate(1px, 1px); }
+  50% { transform: translate(-1px, 0); }
+  60% { transform: translate(1px, 0); }
+  70% { transform: translate(0, -1px); }
+  80% { transform: translate(0, 1px); }
+  90% { transform: translate(-1px, 1px); }
+}
+
+@keyframes icon-fade {
+  to {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+
+@keyframes particle-explosion {
+  0% {
+    background-image:
+      radial-gradient(2px 2px at 50% 50%, rgba(139, 69, 19, 0.9) 50%, transparent 50%),
+      radial-gradient(2px 2px at 30% 40%, rgba(139, 69, 19, 0.9) 50%, transparent 50%),
+      radial-gradient(2px 2px at 70% 60%, rgba(139, 69, 19, 0.9) 50%, transparent 50%),
+      radial-gradient(2px 2px at 45% 55%, rgba(139, 69, 19, 0.9) 50%, transparent 50%),
+      radial-gradient(2px 2px at 55% 45%, rgba(139, 69, 19, 0.9) 50%, transparent 50%),
+      radial-gradient(2px 2px at 60% 50%, rgba(139, 69, 19, 0.9) 50%, transparent 50%),
+      radial-gradient(2px 2px at 40% 50%, rgba(139, 69, 19, 0.9) 50%, transparent 50%),
+      radial-gradient(2px 2px at 50% 60%, rgba(139, 69, 19, 0.9) 50%, transparent 50%);
+    background-size: 4px 4px, 4px 4px, 4px 4px, 4px 4px, 4px 4px, 4px 4px, 4px 4px, 4px 4px;
+    background-position: 50% 50%, 30% 40%, 70% 60%, 45% 55%, 55% 45%, 60% 50%, 40% 50%, 50% 60%;
+    opacity: 1;
+  }
+  50% {
+    background-position: 50% 20%, 10% 30%, 90% 70%, 35% 75%, 75% 25%, 85% 45%, 15% 55%, 50% 85%;
+    opacity: 0.7;
+  }
+  100% {
+    background-position: 50% 0%, 0% 20%, 100% 80%, 25% 95%, 95% 15%, 100% 40%, 0% 60%, 50% 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes minecraft-block-break {
+  0% { background-image: none; opacity: 0; }
+  10% { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><rect x="7" y="6" width="2" height="1" fill="%23000"/><rect x="8" y="7" width="1" height="2" fill="%23000"/><rect x="6" y="9" width="2" height="1" fill="%23000"/></svg>'); opacity: 0.7; }
+  20% { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><rect x="6" y="5" width="3" height="1" fill="%23000"/><rect x="8" y="6" width="1" height="3" fill="%23000"/><rect x="5" y="8" width="3" height="1" fill="%23000"/><rect x="7" y="9" width="2" height="1" fill="%23000"/><rect x="9" y="10" width="2" height="1" fill="%23000"/></svg>'); opacity: 0.75; }
+  100% { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><rect x="0" y="0" width="16" height="1" fill="%23000"/><rect x="0" y="2" width="16" height="1" fill="%23000"/><rect x="0" y="4" width="16" height="1" fill="%23000"/><rect x="0" y="6" width="16" height="1" fill="%23000"/><rect x="0" y="8" width="16" height="1" fill="%23000"/><rect x="0" y="10" width="16" height="1" fill="%23000"/><rect x="0" y="12" width="16" height="1" fill="%23000"/><rect x="0" y="14" width="16" height="1" fill="%23000"/><rect x="0" y="0" width="1" height="16" fill="%23000"/><rect x="3" y="0" width="1" height="16" fill="%23000"/><rect x="6" y="0" width="1" height="16" fill="%23000"/><rect x="9" y="0" width="1" height="16" fill="%23000"/><rect x="12" y="0" width="1" height="16" fill="%23000"/><rect x="15" y="0" width="1" height="16" fill="%23000"/></svg>'); opacity: 1; }
+}
+
+// Authentic Minecraft UI Button (like in the game)
+.minecraft-ui-button {
+  position: relative;
+  padding: 0.75rem 2rem;
+  font-family: 'MinecraftSignText', monospace;
+  font-size: 1.1rem;
+  font-weight: normal;
+  letter-spacing: 1.5px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #FFFFFF;
+  text-shadow: 4px 4px 0px #4C4C4C;
+  background-image: url('/images/stone.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  image-rendering: pixelated;
+  user-select: none;
+  border: none;
+  box-shadow:
+    inset 0 2px 0 0 #E3E3E3,
+    inset 2px 0 0 0 #C6C6C6,
+    inset -2px 0 0 0 #373737,
+    inset 0 -2px 0 0 #252525,
+    0 0 0 2px #000000;
+  transition: all 0.05s ease;
+
+  @media (min-width: 640px) {
+    padding: 1rem 3rem;
+    font-size: 1.25rem;
+  }
+
+  &:hover {
+    filter: brightness(1.15);
+    box-shadow:
+      inset 0 2px 0 0 #F0F0F0,
+      inset 2px 0 0 0 #D3D3D3,
+      inset -2px 0 0 0 #464646,
+      inset 0 -2px 0 0 #343434,
+      0 0 0 2px #000000;
+  }
+
+  &:active {
+    filter: brightness(0.85);
+    box-shadow:
+      inset 0 2px 0 0 #8A8A8A,
+      inset 2px 0 0 0 #7A7A7A,
+      inset -2px 0 0 0 #2A2A2A,
+      inset 0 -2px 0 0 #1A1A1A,
+      0 0 0 2px #000000;
+    transform: translateY(1px);
+  }
+}

@@ -6,11 +6,14 @@ import { RouterLink } from '@angular/router';
   selector: 'app-navigation',
   imports: [CommonModule, RouterLink],
   templateUrl: './navigation.component.html',
-  styles: []
+  styleUrl: './navigation.component.scss'
 })
 export class NavigationComponent {
   mobileMenuOpen = signal(false);
 
+  // Output events for parent component to handle
+  scrollToTopClicked = output<void>();
+  downloadsClicked = output<void>();
   vipClicked = output<void>();
 
   toggleMobileMenu() {
@@ -19,6 +22,15 @@ export class NavigationComponent {
 
   closeMobileMenu() {
     this.mobileMenuOpen.set(false);
+  }
+
+  scrollToTop() {
+    this.scrollToTopClicked.emit();
+  }
+
+  openDownloadsModal() {
+    this.downloadsClicked.emit();
+    this.closeMobileMenu();
   }
 
   openVipModal() {

@@ -5,7 +5,7 @@ import { RouterLink } from '@angular/router';
 export interface FeatureCard {
   title: string;
   description: string;
-  icon: string;
+  image: string;
   color: string;
   route: string;
 }
@@ -27,8 +27,8 @@ export interface FeatureCard {
               'border-blue-500': feature.color === 'blue'
             }"
           >
-            <div class="aspect-square minecraft-dirt-bg flex items-center justify-center text-8xl">
-              {{ feature.icon }}
+            <div class="aspect-square overflow-hidden bg-gray-800 relative">
+              <img [src]="feature.image" [alt]="feature.title" class="w-full h-full object-cover" />
             </div>
             <div class="p-6 text-center bg-gray-800">
               <h3 class="text-xl font-bold text-white mb-2 font-minecraft">

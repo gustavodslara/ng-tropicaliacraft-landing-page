@@ -1,17 +1,82 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="utf-8">
-  <title>NgTropicaliacraftLandingPage</title>
-  <base href="/">
+  <title>TropicaliaCraft - Servidor Minecraft 1.21 e 1.8 | Java, Bedrock e Cross-Play</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <meta name="description" content="Servidor Minecraft brasileiro com Java Mods, Cross-Play (Java + Bedrock) e Bedrock Addons 1.21. Jogue no PC, Celular e Consoles. Minigames clássicos 1.8: SkyWars, BedWars, HungerGames e PVP Arena.">
+  <meta name="keywords" content="minecraft, servidor minecraft, minecraft brasil, java edition, bedrock edition, cross-play, minigames, skywars, bedwars, hungergames, pvp, minecraft 1.21, minecraft 1.8">
+  <meta name="author" content="TropicaliaCraft">
+  <meta name="theme-color" content="#4ade80">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://tropicaliacraft.online/">
+  <meta property="og:title" content="TropicaliaCraft - Servidor Minecraft Brasil">
+  <meta property="og:description" content="Servidor Minecraft 1.21 e 1.8 com Java, Bedrock, Cross-Play, Mods, Addons e Minigames clássicos. Jogue agora!">
+  <meta property="og:image" content="/images/tropicaliaCraft_logo_transparent.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://tropicaliacraft.online/">
+  <meta property="twitter:title" content="TropicaliaCraft - Servidor Minecraft Brasil">
+  <meta property="twitter:description" content="Servidor Minecraft 1.21 e 1.8 com Java, Bedrock, Cross-Play, Mods, Addons e Minigames clássicos.">
+  <meta property="twitter:image" content="/images/tropicaliaCraft_logo_transparent.png">
+  
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="shortcut icon" type="image/png" href="/images/favicon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
+
+  <link rel="canonical" href="https://tropicaliacraft.online/">
 
   <!-- Preload Minecraft Fonts for faster loading -->
   <link rel="preload" href="https://cdn.jsdelivr.net/gh/South-Paw/typeface-minecraft@master/files/minecraft-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/minecraft-sign-text.otf" as="font" type="font/otf" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+  <!-- Structured Data for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoGame",
+    "name": "TropicaliaCraft",
+    "description": "Servidor Minecraft brasileiro com suporte para Java Edition, Bedrock Edition e Cross-Play. Versões 1.21 e 1.8 disponíveis.",
+    "gamePlatform": ["PC", "Mobile", "Console"],
+    "genre": "Sandbox, Survival, Minigames",
+    "offers": {
+      "@type": "Offer",
+      "availability": "https://schema.org/InStock",
+      "price": "0",
+      "priceCurrency": "BRL"
+    }
+  }
+  </script>
+  
+  <!-- Critical Loading Styles - Inline for instant display -->
+  <style>
+    /* Prevent horizontal scroll globally */
+    html, body {
+      overflow-x: hidden;
+      max-width: 100%;
+      width: 100%;
+    }
+    
+    /* Smooth font transition when fonts load */
+    body:not(.fonts-loaded) {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+    
+    body.fonts-loaded {
+      animation: fadeIn 0.3s ease-in;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0.95; }
+      to { opacity: 1; }
+    }
+  </style>
 </head>
 <body>
   <app-root></app-root>
