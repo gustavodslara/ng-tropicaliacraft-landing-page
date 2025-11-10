@@ -183,7 +183,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         { image: '/images/server-features/java.png', label: 'Java Edition' },
         { image: '/images/server-features/bedrock.jpg', label: 'Bedrock Edition' },
         { image: '/images/server-features/pvp.png', label: 'PVP' },
-        { image: '/images/server-features/ecraft.png', label: 'Jogue no Browser', href: 'https://ecraft.tropicaliacraft.online', target: '_blank' },
+        { image: '/images/server-features/ecraft.png', label: 'Jogue no Browser', href: 'https://ecraft.tropicaliacraft.online?server=crossplay.tropicaliacraft.online', target: '_blank' },
         { image: '/images/server-features/crossplay.png', label: 'Cross-Play' },
         { image: '/images/server-features/vivecraft.png', label: 'Suporte ao ViveCraft' },
         { image: '/images/server-features/hungergames.png', label: 'Hunger Games' },
@@ -192,7 +192,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         { image: '/images/server-features/spleef.png', label: 'Spleef' },
         { image: '/images/server-features/creative.jpg', label: 'Criativo' },
         { image: '/images/server-features/bedrock.jpg', label: 'Jogue no Celular' },
-        { image: '/images/server-features/ecraft.png', label: 'EaglerCraft', href: 'https://ecraft.tropicaliacraft.online', target: '_blank' },
+        { image: '/images/server-features/ecraft.png', label: 'EaglerCraft', href: 'https://ecraft.tropicaliacraft.online?server=crossplay.tropicaliacraft.online', target: '_blank' },
         { image: '/images/server-features/vivecraft.png', label: 'Realidade Virtual' },
         { image: '/images/server-features/java.png', label: 'Java Edition' },
         { image: '/images/server-features/bedrock.jpg', label: 'Jogue no Celular' },
@@ -242,7 +242,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   ];
 
-  serverIP = signal('minecraft.tropicaliacraft.online');
+  serverIP = signal('crossplay.tropicaliacraft.online');
   serverPort = signal('25565');
   mobileMenuOpen = signal(false);
   showNotification = signal(false);
@@ -1469,11 +1469,11 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   playClassicOnline(): void {
     // Open Eaglercraft (Pixel Client) in new tab
-    window.open('https://ecraft.tropicaliacraft.online', '_blank');
+    window.open('https://ecraft.tropicaliacraft.online?server=classic.tropicaliacraft.online', '_blank');
   }
 
   playOnline(): void {
     // Open Eaglercraft for 1.21 servers in new tab
-    window.open('https://ecraft.tropicaliacraft.online', '_blank');
+    window.open('https://ecraft.tropicaliacraft.online?server=crossplay.tropicaliacraft.online', '_blank');
   }
 }
