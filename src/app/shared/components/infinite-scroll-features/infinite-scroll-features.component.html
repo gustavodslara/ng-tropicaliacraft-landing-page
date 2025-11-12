@@ -1,7 +1,11 @@
 <!-- Server Features - Infinite Horizontal Scroll - Full Width -->
 <div class="w-full py-12 pb-0 pt-0">
   <div class="server-features-scroll-wrapper">
-    <div #serverFeaturesScroll class="server-features-scroll-content">
+    <div #serverFeaturesScroll class="server-features-scroll-content"
+      (mouseenter)="onMouseEnter()" 
+      (mouseleave)="onMouseLeave()"
+      (touchstart)="onTouchStart()"
+      (touchend)="onTouchEnd()">
       @for (feature of displayedFeatures(); track feature.id) {
       <!-- Card with internal route -->
       @if (feature.route) {

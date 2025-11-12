@@ -24,6 +24,9 @@ export class InfiniteScrollServerFeaturesComponent implements AfterViewInit, OnD
   private animationId?: number;
   private isUserHovering = false;
   private scrollAccumulator = 0;
+  private isTouchScrolling = false;
+  private lastScrollLeft = 0;
+  private scrollCheckInterval?: number;
 
   constructor() {
     // Initialize displayed features when input changes
@@ -62,6 +65,9 @@ export class InfiniteScrollServerFeaturesComponent implements AfterViewInit, OnD
     if (this.animationId) {
       cancelAnimationFrame(this.animationId);
     }
+    if (this.scrollCheckInterval) {
+      clearInterval(this.scrollCheckInterval);
+    }
   }
 
   private startScroll(): void {
@@ -70,16 +76,16 @@ export class InfiniteScrollServerFeaturesComponent implements AfterViewInit, OnD
       return;
     }
 
-    if (this.isUserHovering) return;
+    if (this.isUserHovering || this.isTouchScrolling) return;
 
     const container = this.scrollContainerRef.nativeElement;
     const isMobile = window.innerWidth < 768;
-    const scrollSpeed = isMobile ? 1.2 : 0.8; // Slightly faster for server features
+    const scrollSpeed = isMobile ? 2.5 : 0.8; // Faster for mobile
 
     console.log('🚀 Server features scroll started - Speed:', scrollSpeed, 'px/frame');
 
     const animate = () => {
-      if (!this.scrollContainerRef || this.isUserHovering) return;
+      if (!this.scrollContainerRef || this.isUserHovering || this.isTouchScrolling) return;
 
       const container = this.scrollContainerRef.nativeElement;
       
@@ -104,6 +110,9 @@ export class InfiniteScrollServerFeaturesComponent implements AfterViewInit, OnD
 
   private repositionItems(): void {
     if (!this.scrollContainerRef) return;
+    
+    // Don't reposition during user interaction
+    if (this.isUserHovering || this.isTouchScrolling) return;
 
     const container = this.scrollContainerRef.nativeElement;
     const children = Array.from(container.children) as HTMLElement[];
@@ -174,5 +183,46 @@ export class InfiniteScrollServerFeaturesComponent implements AfterViewInit, OnD
     setTimeout(() => {
       this.startScroll();
     }, 500);
+  }
+
+  onTouchStart(): void {
+    this.isTouchScrolling = true;
+    this.stopScroll();
+    
+    if (!this.scrollContainerRef) return;
+    
+    const container = this.scrollContainerRef.nativeElement;
+    this.lastScrollLeft = container.scrollLeft;
+    
+    // Start monitoring for manual scroll
+    this.scrollCheckInterval = window.setInterval(() => {
+      if (!this.scrollContainerRef) return;
+      
+      const currentScrollLeft = this.scrollContainerRef.nativeElement.scrollLeft;
+      
+      // If scroll position hasn't changed, user stopped scrolling
+      if (Math.abs(currentScrollLeft - this.lastScrollLeft) < 1) {
+        this.onTouchEnd();
+      }
+      
+      this.lastScrollLeft = currentScrollLeft;
+    }, 150);
+  }
+
+  onTouchEnd(): void {
+    if (this.scrollCheckInterval) {
+      clearInterval(this.scrollCheckInterval);
+      this.scrollCheckInterval = undefined;
+    }
+    
+    this.isTouchScrolling = false;
+    this.scrollAccumulator = 0;
+    
+    // Resume auto-scroll after a delay
+    setTimeout(() => {
+      if (!this.isTouchScrolling) {
+        this.startScroll();
+      }
+    }, 1000);
   }
 }

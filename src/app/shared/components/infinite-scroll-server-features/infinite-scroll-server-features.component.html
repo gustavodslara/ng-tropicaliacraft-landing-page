@@ -4,8 +4,8 @@
     <div #scrollContainer class="infinite-scroll-content" 
       (mouseenter)="onMouseEnter()" 
       (mouseleave)="onMouseLeave()"
-      (touchstart)="onMouseEnter()"
-      (touchend)="onMouseLeave()">
+      (touchstart)="onTouchStart()"
+      (touchend)="onTouchEnd()">
       @for (feature of displayedFeatures(); track feature.id) {
       <div class="minecraft-card cursor-pointer flex-shrink-0" [routerLink]="[feature.route]" [ngClass]="{
           'border-green-500': feature.color === 'green',

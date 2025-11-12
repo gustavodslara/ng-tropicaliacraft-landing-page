@@ -12,10 +12,11 @@
   overflow-y: hidden;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE/Edge */
-  scroll-behavior: smooth;
+  scroll-behavior: auto; /* Remove smooth for better manual control */
   cursor: grab;
   user-select: none;
   -webkit-overflow-scrolling: touch; /* Enable momentum scrolling on iOS */
+  scroll-snap-type: none; /* Disable snap for smoother manual scrolling */
   
   &:active {
     cursor: grabbing;
