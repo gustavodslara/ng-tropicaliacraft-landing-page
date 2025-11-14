@@ -86,7 +86,23 @@
   }
 
   <!-- Downloads Modal -->
-  <app-downloads-modal [visible]="showDownloadsModal()" [downloads]="downloadItems" (closed)="closeDownloadsModal()" />
+  <app-downloads-modal 
+    [visible]="showDownloadsModal()" 
+    [downloads]="downloadItems" 
+    [focusTarget]="downloadsFocusTarget()"
+    (closed)="closeDownloadsModal()" />
+  
+  <!-- Loading Spinner Overlay for Game Launch -->
+  @if (isLaunchingGame()) {
+  <div class="fixed inset-0 z-[150] flex items-center justify-center bg-black bg-opacity-75 animate-fade-in">
+    <div class="text-center">
+      <!-- Minecraft-style loading spinner -->
+      <div class="minecraft-spinner mb-4"></div>
+      <p class="text-white font-minecraft text-lg sm:text-xl mb-2">ABRINDO LAUNCHER...</p>
+      <p class="text-gray-400 font-minecraft-sign text-sm">Aguarde enquanto verificamos o launcher</p>
+    </div>
+  </div>
+  }
 
   <!-- Three.js 3D Minecraft Clouds -->
   <div class="absolute inset-0 pointer-events-none">
@@ -120,7 +136,7 @@
       </p> -->
 
       <!-- Play Button - Authentic Minecraft Style -->
-      <button class="minecraft-ui-button mb-4">JOGAR AGORA</button>
+      <button (click)="launchGame(getSelectedServer().protocolUrl)" class="minecraft-ui-button mb-4">JOGAR AGORA</button>
     </div>
   </div>
 </div>
@@ -759,11 +775,11 @@
   <!-- Footer -->
   <footer class="bg-gray-950 border-t-4 border-gray-800 pt-8 pb-4">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <p class="text-gray-500 font-minecraft mb-3">Powered by <span class="text-white">MINECRAFT</span></p>
+      <p class="text-gray-500 font-minecraft mb-3">O melhor servidor de <span class="text-white">MINECRAFT</span></p>
       
       <!-- Tech Stack -->
       <p class="text-gray-600 text-sm mb-4">
-        Built using Angular 20 Zoneless with SSR Hydration + Signals + Tailwind CSS v3
+        Construído com Angular 20 SSG com CSR Hydration + Signals + Tailwind CSS v3
       </p>
       
       <!-- Developer Info -->

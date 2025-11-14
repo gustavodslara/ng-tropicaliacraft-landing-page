@@ -4,7 +4,7 @@
   <div class="absolute inset-0 bg-black bg-opacity-75" (click)="closeModal()"></div>
 
   <!-- Modal Container - Pixelated Minecraft Style -->
-  <div class="relative bg-gray-800 minecraft-modal-border max-w-7xl w-full max-h-[95vh] overflow-y-auto shadow-2xl animate-modal-slide-down">
+  <div #modalContent class="relative bg-gray-800 minecraft-modal-border max-w-7xl w-full max-h-[95vh] overflow-y-auto shadow-2xl animate-modal-slide-down">
     <!-- Close Button - Pixelated Component -->
     <app-modal-close-button (closed)="closeModal()" />
 
@@ -48,7 +48,12 @@
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8 mb-6">
         <!-- LAUNCHERS (LEFT SIDE) -->
         @for (download of getLaunchers(); track download.title; let i = $index) {
-        <div class="minecraft-download-card flex flex-col bg-gray-900 minecraft-card-border overflow-hidden hover:border-green-500 transition-all duration-300 transform hover:scale-105" [class.md:order-1]="i === 0" [class.md:order-3]="i === 1">
+        <div 
+          [attr.data-download-index]="getLauncherIndex(i)"
+          class="minecraft-download-card flex flex-col bg-gray-900 minecraft-card-border overflow-hidden hover:border-green-500 transition-all duration-300 transform hover:scale-105" 
+          [class.focused-item]="isFocused(getLauncherIndex(i))"
+          [class.md:order-1]="i === 0" 
+          [class.md:order-3]="i === 1">
             <!-- Icon Header -->
             <div class="bg-gradient-to-br from-gray-700 to-gray-800 p-6 flex items-center justify-center minecraft-card-border-bottom">
               <span class="text-6xl sm:text-7xl md:text-8xl">{{ download.icon }}</span>
@@ -149,7 +154,12 @@
 
         <!-- MODPACKS (RIGHT SIDE) -->
         @for (download of getModpacks(); track download.title; let i = $index) {
-        <div class="minecraft-download-card flex flex-col bg-gray-900 minecraft-card-border overflow-hidden hover:border-green-500 transition-all duration-300 transform hover:scale-105" [class.md:order-2]="i === 0" [class.md:order-4]="i === 1">
+        <div 
+          [attr.data-download-index]="getModpackIndex(i)"
+          class="minecraft-download-card flex flex-col bg-gray-900 minecraft-card-border overflow-hidden hover:border-green-500 transition-all duration-300 transform hover:scale-105" 
+          [class.focused-item]="isFocused(getModpackIndex(i))"
+          [class.md:order-2]="i === 0" 
+          [class.md:order-4]="i === 1">
           <!-- Icon Header -->
           <div class="bg-gradient-to-br from-gray-700 to-gray-800 p-6 flex items-center justify-center minecraft-card-border-bottom">
             <span class="text-6xl sm:text-7xl md:text-8xl">{{ download.icon }}</span>

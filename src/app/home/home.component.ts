@@ -286,6 +286,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   currentTagline = signal('');
   showVipModal = signal(false);
   showDownloadsModal = signal(false);
+  isLaunchingGame = signal(false); // Loading state for game launch
+  downloadsFocusTarget = signal<'launcher' | 'modpack' | null>(null); // Focus target for downloads modal
 
   toggleMobileMenu() {
     this.mobileMenuOpen.set(!this.mobileMenuOpen());
@@ -312,12 +314,19 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   openDownloadsModal() {
+    this.downloadsFocusTarget.set(null); // Auto-detect device
     this.showDownloadsModal.set(true);
     this.closeMobileMenu();
   }
 
   closeDownloadsModal() {
     this.showDownloadsModal.set(false);
+    this.downloadsFocusTarget.set(null);
+  }
+  
+  openDownloadsModalWithFocus(target: 'launcher' | 'modpack') {
+    this.downloadsFocusTarget.set(target);
+    this.showDownloadsModal.set(true);
   }
 
   // Scroll to server section
@@ -330,7 +339,26 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // Launch game with custom protocol
   launchGame(protocolUrl: string) {
+    // Show loading spinner
+    this.isLaunchingGame.set(true);
+    
+    // Try to launch the game with the custom protocol
     window.location.href = protocolUrl;
+    
+    // Set a timeout to check if the protocol handler worked
+    // If the user is still on the page after a short delay, the protocol didn't work
+    setTimeout(() => {
+      // Check if the page is still visible (user didn't switch to the game)
+      if (!document.hidden) {
+        // Protocol handler didn't work, open Downloads modal focused on launcher
+        this.isLaunchingGame.set(false);
+        this.openDownloadsModalWithFocus('launcher');
+        this.showCopyNotification('Launcher não detectado! Baixe o launcher para jogar.');
+      } else {
+        // User switched away, hide spinner
+        this.isLaunchingGame.set(false);
+      }
+    }, 2000); // 2 second delay to detect if protocol failed
   }
 
   bfeatures: VipTier[] = [
@@ -1463,8 +1491,24 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // Game Launch Methods
   launchClassicGame(): void {
+    // Show loading spinner
+    this.isLaunchingGame.set(true);
+    
     // Launch Classic Minecraft 1.8 using tropicalia:// protocol
     window.location.href = 'tropicalia://classic.tropicaliacraft.online:25755';
+    
+    // Set a timeout to check if the protocol handler worked
+    setTimeout(() => {
+      if (!document.hidden) {
+        // Protocol handler didn't work, open Downloads modal focused on launcher
+        this.isLaunchingGame.set(false);
+        this.openDownloadsModalWithFocus('launcher');
+        this.showCopyNotification('Launcher não detectado! Baixe o launcher para jogar.');
+      } else {
+        // User switched away, hide spinner
+        this.isLaunchingGame.set(false);
+      }
+    }, 2000);
   }
 
   playClassicOnline(): void {

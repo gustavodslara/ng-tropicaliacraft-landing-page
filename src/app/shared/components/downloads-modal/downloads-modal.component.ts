@@ -1,4 +1,4 @@
-import { Component, input, output, signal } from '@angular/core';
+import { Component, input, output, signal, effect, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ModalCloseButtonComponent } from '../modal-close-button/modal-close-button.component';
 
@@ -36,11 +36,14 @@ export interface DownloadItem {
   templateUrl: './downloads-modal.component.html',
   styleUrl: './downloads-modal.component.scss'
 })
-export class DownloadsModalComponent {
+export class DownloadsModalComponent implements AfterViewInit {
   visible = input.required<boolean>();
   downloads = input.required<DownloadItem[]>();
+  focusTarget = input<'launcher' | 'modpack' | null>(null); // What to focus on when opened
 
   closed = output<void>();
+
+  @ViewChild('modalContent') modalContent?: ElementRef<HTMLDivElement>;
 
   // Track which dropdown is open (by index)
   openDropdownIndex = signal<number | null>(null);
@@ -50,6 +53,90 @@ export class DownloadsModalComponent {
 
   // Track which info modal is open
   openInfoModalIndex = signal<number | null>(null);
+  
+  // Track focused item for visual effect
+  focusedItemIndex = signal<number | null>(null);
+  
+  constructor() {
+    // Watch for visibility changes and handle focus
+    effect(() => {
+      if (this.visible()) {
+        this.handleModalOpen();
+      }
+    });
+  }
+  
+  ngAfterViewInit() {
+    // Component initialized
+  }
+  
+  private handleModalOpen() {
+    // Determine which item to focus based on device and focusTarget input
+    const target = this.focusTarget();
+    let indexToFocus: number | null = null;
+    
+    if (target === 'launcher') {
+      // Focus on first launcher (Desktop Launcher = index 0)
+      indexToFocus = 0;
+    } else if (target === 'modpack') {
+      // Focus on first modpack (index 2)
+      indexToFocus = 2;
+    } else {
+      // Auto-detect based on device
+      const isMobile = this.isMobileDevice();
+      
+      if (isMobile) {
+        // Mobile: Focus on TropicaliaAmethyst (index 1 - Android launcher)
+        indexToFocus = 1;
+      } else {
+        // Desktop: Focus on Desktop Launcher (index 0)
+        indexToFocus = 0;
+      }
+    }
+    
+    // Set focused item
+    this.focusedItemIndex.set(indexToFocus);
+    
+    // Scroll to focused item after modal renders
+    setTimeout(() => {
+      this.scrollToFocusedItem(indexToFocus);
+    }, 100);
+    
+    // Remove focus glow after 4 seconds
+    setTimeout(() => {
+      this.focusedItemIndex.set(null);
+    }, 4000);
+  }
+  
+  private scrollToFocusedItem(index: number | null) {
+    if (index === null || !this.modalContent) return;
+    
+    const element = this.modalContent.nativeElement.querySelector(`[data-download-index="${index}"]`);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+  
+  private isMobileDevice(): boolean {
+    const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera;
+    
+    // Check for iOS
+    if (/iPad|iPhone|iPod/.test(userAgent) && !(window as any).MSStream) {
+      return true;
+    }
+    
+    // Check for Android
+    if (/android/i.test(userAgent)) {
+      return true;
+    }
+    
+    // Check for other mobile indicators
+    return /Mobile|Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+  }
+  
+  isFocused(index: number): boolean {
+    return this.focusedItemIndex() === index;
+  }
 
   closeModal() {
     this.closed.emit();
